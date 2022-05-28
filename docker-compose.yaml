@@ -1,0 +1,30 @@
+version: '3.9'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rss-api
+    ports:
+      - 3000:3000
+    environment:
+      - MONGO_URL=mongodb://rss-mongo:27017/rss-api
+      - PORT=3000
+      - NODE_ENV=production
+    links:
+      - "mongo"
+    depends_on:
+      - "mongo"
+    networks:
+      - rss-api-network
+
+  mongo:
+    image: mongo:latest
+    container_name: rss-mongo
+    ports:
+      - 27017:27017
+    networks:
+      - rss-api-network
+
+networks:
+  rss-api-network:

@@ -1,6 +1,5 @@
-const Joi = require("joi");
-
-Joi.objectId = require("joi-objectid")(Joi);
+const JoiExtensionObjectId = require("@ciruxx/joi-extension-objectid");
+const Joi = require("joi").extend(JoiExtensionObjectId);
 
 const CreatePostSchema = Joi.object({
   title: Joi.string().required(),
@@ -24,8 +23,8 @@ const CreatePostSchema = Joi.object({
 });
 
 const QuerySchema = Joi.object({
-  limit: Joi.number().default(25),
-  skip: Joi.number().default(0),
+  limit: Joi.number().default(25).positive().not(0),
+  skip: Joi.number().default(0).positive(),
 });
 
 const IdSchema = Joi.object({

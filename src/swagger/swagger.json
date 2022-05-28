@@ -1,0 +1,300 @@
+{
+  "info": {
+    "title": "RSS API",
+    "version": "1.0"
+  },
+  "definitions": {
+    "Post": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "link": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pubDate": {
+          "type": "string"
+        },
+        "creator": {
+          "type": "string"
+        },
+        "metadata": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "_id": {
+          "type": "string"
+        },
+        "__v": {
+          "type": "number"
+        }
+      }
+    },
+    "CreatePost": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "link": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pubDate": {
+          "type": "string"
+        },
+        "creator": {
+          "type": "string"
+        },
+        "metadata": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "required": ["title", "description", "categories", "creator"]
+    },
+    "UpdatePost": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "link": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pubDate": {
+          "type": "string"
+        },
+        "creator": {
+          "type": "string"
+        },
+        "metadata": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "Can be string or bool or integer",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "number"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/v1/posts/": {
+      "get": {
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "number",
+            "description": "Default value is 25",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "type": "number",
+            "description": "Default value is 0",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns list of posts",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Post"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "New Post",
+            "schema": {
+              "$ref": "#/definitions/CreatePost"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Returns created post",
+            "schema": {
+              "$ref": "#/definitions/Post"
+            }
+          },
+          "400": {
+            "description": "Bad Request Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/v1/posts/{id}": {
+      "get": {
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns post",
+            "schema": {
+              "$ref": "#/definitions/Post"
+            }
+          },
+          "400": {
+            "description": "Bad Request Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not Found Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "post",
+            "schema": {
+              "$ref": "#/definitions/UpdatePost"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return updated post",
+            "schema": {
+              "$ref": "#/definitions/Post"
+            }
+          },
+          "400": {
+            "description": "Bad Request Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not Found Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not Found Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [{ "name": "Post" }],
+  "swagger": "2.0"
+}
