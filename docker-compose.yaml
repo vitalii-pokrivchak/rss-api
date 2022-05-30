@@ -5,8 +5,6 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: rss-api
-    ports:
-      - 3000:3000
     environment:
       - MONGO_URL=mongodb://rss-mongo:27017/rss-api
       - PORT=3000
@@ -15,6 +13,18 @@ services:
       - "mongo"
     depends_on:
       - "mongo"
+    networks:
+      - rss-api-network
+
+  web-server:
+    image: nginx:alpine
+    container_name: rss-nginx
+    ports:
+      - 80:80
+    volumes:
+      - "./nginx.conf:/etc/nginx/conf.d/default.conf"
+    links:
+      - "api"
     networks:
       - rss-api-network
 

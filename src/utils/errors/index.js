@@ -4,13 +4,6 @@ class APIError extends Error {
     this.code = code;
     this.message = message;
   }
-
-  toJSON() {
-    return {
-      code: this.code,
-      message: this.message,
-    };
-  }
 }
 
 module.exports = APIError;

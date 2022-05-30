@@ -7,6 +7,7 @@ const APIError = require("../../utils/errors");
  *
  * @param {express.Request} req
  * @param {express.Response} res
+ * @param {express.NextFunction} next
  */
 const getPosts = async (req, res, next) => {
   try {
@@ -21,6 +22,7 @@ const getPosts = async (req, res, next) => {
  *
  * @param {express.Request} req
  * @param {express.Response} res
+ * @param next
  */
 const getPostById = async (req, res, next) => {
   try {
@@ -41,6 +43,7 @@ const getPostById = async (req, res, next) => {
  *
  * @param {express.Request} req
  * @param {express.Response} res
+ * @param {express.NextFunction} next
  */
 const createPost = async (req, res, next) => {
   try {
@@ -51,7 +54,7 @@ const createPost = async (req, res, next) => {
       return res.status(201).json(await service.savePost(post));
     }
 
-    next(new APIError(400, "Post aleady exists"));
+    next(new APIError(400, "Post already exists"));
   } catch (e) {
     next(new APIError(400, e.message));
   }
@@ -61,6 +64,7 @@ const createPost = async (req, res, next) => {
  *
  * @param {express.Request} req
  * @param {express.Response} res
+ * @param {express.NextFunction} next
  */
 const updatePost = async (req, res, next) => {
   try {
@@ -84,6 +88,7 @@ const updatePost = async (req, res, next) => {
  *
  * @param {express.Request} req
  * @param {express.Response} res
+ * @param {express.NextFunction} next
  */
 const removePost = async (req, res, next) => {
   try {

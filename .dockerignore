@@ -1,0 +1,7 @@
+# Ignore all files
+*
+
+# Allow files and directories
+!/package-lock.json
+!/package.json
+!/src

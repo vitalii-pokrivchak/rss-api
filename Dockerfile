@@ -2,13 +2,9 @@ FROM node:lts-alpine
 
 WORKDIR /app
 
-COPY ./package.json .
+COPY . .
 
-COPY ./package-lock.json .
-
-COPY src src
-
-EXPOSE 3000
+EXPOSE $PORT
 
 RUN npm install
 
