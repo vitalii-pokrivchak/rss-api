@@ -1,18 +1,19 @@
 # RSS-API
 
 ## Getting Started
+
+### Run application
 ```bash
-# Run application
 make up
 ```
 
+### Have some changes ?
 ```bash
-# Have some changes ?
 make build
 ```
 
+### Stop application and clean resources
 ```bash
-# Stop application and clean resources
 make down
 ```
 
