@@ -36,7 +36,7 @@ const logger = createLogger({
     exitOnError: false,
 });
 
-const skip = (_, res) => (isDevelopment ? res.statusCode < 400 : false);
+const skip = (_, res) => (!isDevelopment ? res.statusCode < 400 : false);
 
 const loggerMiddleware = morgan(
     function (tokens, req, res) {
